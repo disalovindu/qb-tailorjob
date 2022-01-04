@@ -58,7 +58,7 @@ Make sure to add these in qb-core/client/functions.lua
 (And this after Drawtext3d) 
 
 ```lua
-QBCore.Functions.Draw2DText = function(x, y, text, scale)
+function QBCore.Functions.Draw2DText(x, y, text, scale)
     SetTextFont(4)
     SetTextProportional(7)
     SetTextScale(scale, scale)
