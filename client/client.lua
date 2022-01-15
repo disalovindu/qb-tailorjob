@@ -346,3 +346,39 @@ function SellShirt()
 
 	isProcessing2 = false
 end
+
+--Cotton field blips
+
+CreateThread(function()
+    -- local blip = AddBlipForCoord(2064.4783, 4916.6768, 41.1036)
+    local blip = AddBlipForCoord(Config.CircleZones.CottonField.coords)
+    SetBlipSprite(blip, 73)
+    SetBlipAsShortRange(blip, true)
+    SetBlipScale(blip, 0.7)
+    SetBlipColour(blip, 49)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString("Cotton field")
+    EndTextCommandSetBlipName(blip)
+end)
+
+CreateThread(function()
+    local blip = AddBlipForCoord(Config.CircleZones.SewingClothes.coords)
+    SetBlipSprite(blip, 73)
+    SetBlipAsShortRange(blip, true)
+    SetBlipScale(blip, 0.7)
+    SetBlipColour(blip, 49)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString("Sewing Clothes")
+    EndTextCommandSetBlipName(blip)
+end)
+
+CreateThread(function()
+    local blip = AddBlipForCoord(Config.CircleZones.TextileOwner.coords)
+    SetBlipSprite(blip, 73)
+    SetBlipAsShortRange(blip, true)
+    SetBlipScale(blip, 0.7)
+    SetBlipColour(blip, 49)
+    BeginTextCommandSetBlipName("STRING")
+    AddTextComponentString("Textile Owner")
+    EndTextCommandSetBlipName(blip)
+end)
