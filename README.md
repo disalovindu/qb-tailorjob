@@ -24,34 +24,6 @@ qb-core/shared.lua
 ["cotton"] 					 = {["name"] = "cotton", 					["label"] = "Cotton", 				        ["weight"] = 1000, 		["type"] = "item", 		["image"] = "cotton.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,  ["combinable"] = nil,   ["description"] = "An item that need to make fabricrolls"},
 
 Step 2
-Add these to qb-shops/config.lua
-
-    ["fabricshop"] = {
-        [1] = {
-            name = 'fabricroll',
-            price = 10,
-            amount = 100,
-            info = {},
-            type = 'item',
-            slot = 1,
-        },
-    },        
-}
-
-(This at the Bottom)
-},
-    ["Fabricshop"] = {
-        ["label"] = "Fabricshop",
-        ["type"] = "fabricshop",
-        ["coords"] = {
-            [1] = vector3(-1450.22, -237.4, 49.81)
-        },
-        ["products"] = Config.Products["fabricshop"],
-        ["showblip"] = false,
-    },    
-}
-
-Step 3
 Make sure to add these in qb-core/client/functions.lua
 (And this after Drawtext3d) 
 
