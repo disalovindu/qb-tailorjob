@@ -20,9 +20,7 @@ Make sure you add the images that i gave to the inventory and open the shared.lu
 qb-core/shared.lua
 
 ["shirt"] 					 = {["name"] = "shirt", 					["label"] = "Shirt", 					["weight"] = 4000, 		["type"] = "item", 		["image"] = "shirt.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,  ["combinable"] = nil,   ["description"] = "Nice shirt you got there"},
-
 ["fabricroll"] 					 = {["name"] = "fabricroll", 					["label"] = "Fabricroll", 				["weight"] = 2000, 		["type"] = "item", 		["image"] = "fabric.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,  ["combinable"] = nil,   ["description"] = "An item that need to make shirts"},
-
 ["cotton"] 					 = {["name"] = "cotton", 					["label"] = "Cotton", 				        ["weight"] = 1000, 		["type"] = "item", 		["image"] = "cotton.png", 				["unique"] = false, 	["useable"] = false, 	["shouldClose"] = false,  ["combinable"] = nil,   ["description"] = "An item that need to make fabricrolls"},
 
 Step 2
@@ -58,7 +56,7 @@ Make sure to add these in qb-core/client/functions.lua
 (And this after Drawtext3d) 
 
 ```lua
-function QBCore.Functions.Draw2DText(x, y, text, scale)
+QBCore.Functions.Draw2DText = function(x, y, text, scale)
     SetTextFont(4)
     SetTextProportional(7)
     SetTextScale(scale, scale)

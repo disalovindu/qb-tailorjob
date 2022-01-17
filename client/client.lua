@@ -170,7 +170,7 @@ function GetCoordZWeed(x, y)
 	return 31.85
 end
 
-Citizen.CreateThread(function()
+Citizen.CreateThread(function()----1 process
 	while QBCore == nil do
 		Wait(200)
 	end
@@ -251,6 +251,84 @@ function ProcessCotton()
 
 			if GetDistanceBetweenCoords(GetEntityCoords(playerPed), Config.CircleZones.SewingClothes.coords, false) > 4 then
 				TriggerServerEvent('qb-tailorjob:cancelProcessing')
+				break
+			end
+		end
+		ClearPedTasks(PlayerPedId())
+	end, function()
+		ClearPedTasks(PlayerPedId())
+	end) -- Cancel
+	
+	isProcessing = false
+end
+
+Citizen.CreateThread(function()----2 process
+	while QBCore == nil do
+		Wait(200)
+	end
+	while true do
+		Wait(10)
+		local playerPed = PlayerPedId()
+		local coords = GetEntityCoords(playerPed)
+
+		if GetDistanceBetweenCoords(coords, Config.CircleZones.MakeFabricroll.coords, true) < 5 then
+			DrawMarker(2, Config.CircleZones.MakeFabricroll.coords.x, Config.CircleZones.MakeFabricroll.coords.y, Config.CircleZones.MakeFabricroll.coords.z - 0.2 , 0, 0, 0, 0, 0, 0, 0.1, 0.1, 0.1, 86, 236, 22, 100, 0, 0, 0, true, 0, 0, 0)
+
+			
+			if not isProcessing and GetDistanceBetweenCoords(coords, Config.CircleZones.MakeFabricroll.coords, true) <1 then
+				--QBCore.Functions.DrawText3D(Config.CircleZones.MakeFabricroll.coords.x, Config.CircleZones.MakeFabricroll.coords.y, Config.CircleZones.MakeFabricroll.coords.z, 'Press ~g~[E]~w~ to Make Fabricrolls')
+			end
+
+			if IsControlJustReleased(0, 38) and not isProcessing then
+				local hasCotton = false
+				local s1 = false
+	
+				QBCore.Functions.TriggerCallback('QBCore:HasItem', function(result)
+					hasCotton = result
+					s1 = true
+				end, 'cotton')
+				
+				while(not s1) do
+					Wait(100)
+				end
+				Wait(100)
+
+				if (hasCotton) then
+					ProcessCotton2()
+				elseif (hasCotton) then
+					QBCore.Functions.Notify('You dont have enough Cotton.', 'error')
+				end
+			end
+		else
+			Wait(500)
+		end
+	end
+end)
+
+function ProcessCotton2()
+	isProcessing = true
+	local playerPed = PlayerPedId()
+
+	TaskStartScenarioInPlace(playerPed, "PROP_HUMAN_PARKING_METER", 0, true)
+	SetEntityHeading(PlayerPedId(), 108.06254)
+
+	QBCore.Functions.Progressbar("search_register", "Making Fabricrolls..", 1000, false, true, {
+		disableMovement = true,
+		disableCarMovement = true,
+		disableMouse = false,
+		disableCombat = true,
+		disableInventory = false,
+	}, {}, {}, {}, function()
+	 TriggerServerEvent('qb-tailorjob:processweed2')
+
+		local timeLeft = Config.Delays.SewingClothes / 1000
+
+		while timeLeft > 0 do
+			Wait(1000)
+			timeLeft = timeLeft - 1
+
+			if GetDistanceBetweenCoords(GetEntityCoords(playerPed), Config.CircleZones.SewingClothes.coords, false) > 4 then
+				TriggerServerEvent('qb-tailorjob:cancelProcessing2')
 				break
 			end
 		end
@@ -368,7 +446,7 @@ CreateThread(function()
     SetBlipScale(blip, 0.7)
     SetBlipColour(blip, 49)
     BeginTextCommandSetBlipName("STRING")
-    AddTextComponentString("Sewing Clothes")
+    AddTextComponentString("Factory")
     EndTextCommandSetBlipName(blip)
 end)
 

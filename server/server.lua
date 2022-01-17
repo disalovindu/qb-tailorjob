@@ -17,13 +17,11 @@ RegisterServerEvent('qb-tailorjob:processweed')
 AddEventHandler('qb-tailorjob:processweed', function()
     local src = source
     local Player = QBCore.Functions.GetPlayer(src)
-    local cotton = Player.Functions.GetItemByName("cotton")
       local fabricroll = Player.Functions.GetItemByName("fabricroll")
 
-    if cotton ~= nil and fabricroll ~= nil then
-        if Player.Functions.RemoveItem('cotton', 2) and Player.Functions.RemoveItem('fabricroll', 1) then
+    if fabricroll ~= nil then
+        if Player.Functions.RemoveItem('fabricroll', 2) then
             Player.Functions.AddItem('shirt', 1)-----change this
-            TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['cotton'], "remove")
             TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['fabricroll'], "remove")
             TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['shirt'], "add")
             TriggerClientEvent('QBCore:Notify', src, '	Shirt sewed sucessfully', "success")  
@@ -33,6 +31,22 @@ AddEventHandler('qb-tailorjob:processweed', function()
     else
         TriggerClientEvent('QBCore:Notify', src, 'You don\'t have the right items', "error") 
     end
+end)
+
+RegisterServerEvent('qb-tailorjob:processweed2')
+AddEventHandler('qb-tailorjob:processweed2', function()
+    local src = source
+    local Player = QBCore.Functions.GetPlayer(src)
+    local cotton = Player.Functions.GetItemByName("cotton")
+
+        if Player.Functions.RemoveItem('cotton', 2) then
+            Player.Functions.AddItem('fabricroll', 1)-----change this
+            TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['cotton'], "remove")
+            TriggerClientEvent("inventory:client:ItemBox", source, QBCore.Shared.Items['fabricroll'], "add")
+            TriggerClientEvent('QBCore:Notify', src, 'Fabricroll Made sucessfully', "success")  
+        else
+            TriggerClientEvent('QBCore:Notify', src, 'You don\'t have the right items', "error") 
+        end
 end)
 
 --selldrug ok
